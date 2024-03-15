@@ -1,0 +1,27 @@
+/* Put styles for elements present on all pages - for consistency */
+/* For styles unique to your webpage create a new stylesheet for that page as "page.css"*/
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Page Header as h1 */
+h1 {
+
+}
+
+button {
+    
+}
+button:hover {
+
+}
+
+/* Form Fields */
+label {
+
+}
+
+input {
+
+}
