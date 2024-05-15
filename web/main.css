@@ -1,0 +1,90 @@
+/* Put styles for elements present on all pages - for consistency */
+/* For styles unique to your webpage create a new stylesheet for that page as "page.css"*/
+:root {
+    /* 8ecae6-219ebc-023047-faf9ef-ffb703-fb8500 */
+    --theme-colour-bg: #FAF9EF;
+    --theme-colour-bg-tp: rgba(250, 249, 239, 0.90);
+    --theme-colour-accent: #FFB703;
+    --theme-colour-highlight: #FAF9EF;
+    --theme-colour-fg: #000000;
+    --theme-colour-fg-hover: #2A48B7;
+    --font-size-header: 22;
+    --font-size-default: 18;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--theme-colour-fg);
+}
+
+li > a {
+    font-size: var(--font-size-default);
+    color: var(--theme-colour-fg);
+    text-decoration: none;
+}
+
+li > a:hover {
+    color: var(--theme-colour-fg-hover);
+    text-shadow: 0px 0px 20px var(--theme-colour-fg-hover);
+}
+
+/* Navigation Menu Styles */
+nav .menu{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    left: 0;
+    right: 0;
+}
+.menu {
+    list-style-type: none;
+}
+
+.nav {
+    float: left;
+    padding: 25px 50px;
+}
+
+.logo {
+    font-size: var(--font-size-header);
+    margin-right: 80px;
+}
+
+
+/* Form Button Styles */
+button{
+    color:  var(--theme-colour-bg);
+    border-color: var(--theme-colour-fg-hover);
+    background-color: var(--theme-colour-fg-hover);
+    font-size: small;
+    border-width: 1px;
+    border-style: solid;
+    padding: 8px 25px;
+}
+button:hover {
+    color: var(--theme-colour-fg-hover);
+    border-color: var(--theme-colour-fg-hover);
+    background-color: var(--theme-colour-bg);
+    border-width: 1px;
+
+}
+
+/* Form Fields */
+label {
+    color: var(--theme-colour-fg);
+    padding: 15px 35px;
+}
+
+input {
+    border-style: solid;
+}
+
+.bg {
+    background-color: var(--theme-colour-bg);
+}
+
+.transparent-bg {
+    background-color: var(--theme-colour-bg-tp);
+}
