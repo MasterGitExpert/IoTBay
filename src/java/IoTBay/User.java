@@ -6,6 +6,8 @@
 package IOTBay;
 import java.lang.String;
 
+import IOTBay.DBManager;
+
 /**
  *
  * @author Krish
@@ -35,15 +37,19 @@ public class User{
         return user_id;
     }
 
-    public void setId(int user_id) {
-        this.user_id = user_id;
-    }
+    // public void setId(int user_id) {
+    //     this.user_id = user_id;
+    // }
 
     public String getFirst_name() {
         return first_name;
     }
 
     public void setFirst_name(String first_name) {
+        DBManager.writeQuery("UPDATE Users" +
+        "SET first_name = '" + first_name + "'," +
+        "WHERE email = '" + this.email + "';");
+        DBManager.closeConnection();
         this.first_name = first_name;
     }
 
@@ -52,6 +58,10 @@ public class User{
     }
 
     public void setLast_name(String last_name) {
+        DBManager.writeQuery("UPDATE Users" +
+        "SET last_name = 'Admin'," +
+        "WHERE email = 'admin@mail.com';");
+        DBManager.closeConnection();
         this.last_name = last_name;
     }
 
@@ -60,6 +70,7 @@ public class User{
     }
 
     public void setEmail(String email) {
+        
         this.email = email;
     }
 

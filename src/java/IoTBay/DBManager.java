@@ -14,33 +14,33 @@ import java.sql.*;
  */
 
 public class DBManager {
-    private final String database_url = "jdbc:derby://localhost:1527/iotdb";
-    private final String username = "iotadmin";
-    private final String password = "admin";
-    private Connection connection;
-    private Statement statement;
+    private static final String database_url = "jdbc:derby://localhost:1527/iotdb";
+    private static final String username = "iotadmin";
+    private static final String password = "admin";
+    private static Connection connection;
+    private static Statement statement;
 
-    private void establishConnection(){
+    private static void establishConnection(){
         /* Opens a connection to db for SQL queries */
         try{
-            this.connection = DriverManager.getConnection(database_url, username, password);
-            this.statement = this.connection.createStatement();
+            connection = DriverManager.getConnection(database_url, username, password);
+            statement = connection.createStatement();
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
-    public void closeConnection(){
+    public static void closeConnection(){
         /* Closes open connections to db for security and memory optimisation */
         try{
-            this.statement.close();
-            this.connection.close();
+            statement.close();
+            connection.close();
         }catch (SQLException e){
             e.printStackTrace();
         }
     }
 
-    public String databaseInjectionFilter(String query){
+    public static String databaseInjectionFilter(String query){
         /* Removes illegal inputs in the query to prevent SQL injection attacks */
 
         // Removes SQL comments, to prevent where condition bypass injections 
@@ -52,12 +52,12 @@ public class DBManager {
         return query;
     }
 
-    public ResultSet readQuery(String query){
+    public static ResultSet readQuery(String query){
         /* Only runs select queries on db to prevent unwanted changes (i.e. lower security risks) */
         establishConnection();
         try{
             query = databaseInjectionFilter(query);
-            ResultSet resultSet = this.statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery(query);
             return resultSet;
         }catch (SQLException e){
             e.printStackTrace();
@@ -65,12 +65,12 @@ public class DBManager {
         return null;
     }
     
-    public int writeQuery(String query){
+    public static int writeQuery(String query){
         /* Runs queries that create cause db changes */
         establishConnection();
         try{
             query = databaseInjectionFilter(query);
-            int response = this.statement.executeUpdate(query);
+            int response = statement.executeUpdate(query);
             return response;
         }catch (SQLException e){
             e.printStackTrace();

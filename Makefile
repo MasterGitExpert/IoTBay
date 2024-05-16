@@ -22,6 +22,7 @@ branch:
 	git pull --all
 	git branch $(B) 
 	git checkout $(B)
+	git pull --all
 
 push: msg_required
 	git add .
