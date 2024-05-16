@@ -58,9 +58,11 @@ public class DBManager {
         try{
             query = databaseInjectionFilter(query);
             ResultSet resultSet = statement.executeQuery(query);
+            closeConnection();
             return resultSet;
         }catch (SQLException e){
             e.printStackTrace();
+            closeConnection();
         }
         return null;
     }
@@ -71,9 +73,11 @@ public class DBManager {
         try{
             query = databaseInjectionFilter(query);
             int response = statement.executeUpdate(query);
+            closeConnection();
             return response;
         }catch (SQLException e){
             e.printStackTrace();
+            closeConnection();
         }
         return 0;
     }

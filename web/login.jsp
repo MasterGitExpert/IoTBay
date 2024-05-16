@@ -40,10 +40,10 @@
         <div class="transparent-bg">
             <div>
                 <h1>Internet Of Things Bay</h1>
-                <form action="welcome.jsp" method="POST">
+                <form action="login" method="POST">
                     <table style="border: none;">  
                         <tr>
-                            <td><label>Username</label></td><td><input type="text" placeholder="Enter Email" name="username" required="true">                            </td>
+                            <td><label>Username</label></td><td><input type="text" placeholder="Enter Email" name="username" required="true"></td>
                         </tr>
                     <div>  
                         <tr>
