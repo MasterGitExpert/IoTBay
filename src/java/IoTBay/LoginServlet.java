@@ -7,26 +7,30 @@ package IoTBay;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.http.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.RequestDispatcher;
 
-import IOTBay.DBManager; 
-import IOTBay.User;
+import IoTBay.Controller;
+import IoTBay.DBManager; 
+import IoTBay.User;
 
 
 /**
  *
  * @author Krish
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+// @WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet{
 
     // /**
     //  * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,22 +41,38 @@ public class LoginServlet extends HttpServlet {
     //  * @throws ServletException if a servlet-specific error occurs
     //  * @throws IOException if an I/O error occurs
     //  */
-    // protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    //         throws ServletException, IOException {
-    //     response.setContentType("text/html;charset=UTF-8");
-    //     try (PrintWriter out = response.getWriter()) {
-    //         /* TODO output your page here. You may use following sample code. */
-    //         out.println("<!DOCTYPE html>");
-    //         out.println("<html>");
-    //         out.println("<head>");
-    //         out.println("<title>Servlet LoginServelet</title>");            
-    //         out.println("</head>");
-    //         out.println("<body>");
-    //         out.println("<h1>Servlet LoginServelet at " + request.getContextPath() + "</h1>");
-    //         out.println("</body>");
-    //         out.println("</html>");
-    //     }
-    // }
+
+public static ResultSet DBQuery(String email, String pass){
+        try {
+            PreparedStatement statement2 = DBManager.establishConnection("SELECT * FROM Users WHERE email = ? AND pass = ? ;");
+            statement2.setString(1, email);
+            statement2.setString(2, pass);
+            ResultSet response = statement2.executeQuery();
+            return response;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+
+        // PrintWriter out = response.getWriter();
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        ResultSet rs = DBQuery(username, password);
+        User user = Controller.checkCredentials(username, password);
+        HttpSession session = request.getSession();
+        session.setAttribute("User", user);
+        RequestDispatcher rd = request.getRequestDispatcher("welcome.jsp");
+        rd.forward(request, response);
+        // response.sendRedirect("/welcome");
+        // out.println("<script>alert(\"Login credentials are not valid, Please try again.\")</script>");
+        // RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
+        // rd.include(request, response);
+    }
 
     // /**
     //  * Handles the HTTP <code>GET</code> method.
@@ -79,37 +99,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        PrintWriter out = response.getWriter();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        try{
-            int count = DBManager.readQuery("SELECT COUNT(*) as user_count FROM Users " +
-                "WHERE email = '" + username + "' " +
-                "AND pass = '" + password + "'; ").getInt("user_count");
-            if (count == 1){
-                ResultSet rs = DBManager.readQuery("SELECT * FROM Users " +
-                "WHERE email = '" + username + "' " +
-                "AND pass = '" + password + "';");
-                User user = new User(rs.getInt("user_id"), 
-                                    rs.getString("first_name"), 
-                                    rs.getString("last_name"),
-                                    rs.getString("email"),
-                                    rs.getString("pass"),
-                                    rs.getString("dob"),
-                                    rs.getString("phone"),
-                                    rs.getString("registration_datetime"),
-                                    rs.getString("access"));
-                RequestDispatcher rd = request.getRequestDispatcher("/welcome.jsp");
-                rd.include(request, response);
-
-                return;            
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        out.println("<script>alert(\"Login credentials are not valid, Please try again.\")</script>");
+        processRequest(request, response);
     }
 
     /**
@@ -120,6 +110,6 @@ public class LoginServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Is a controller Login page front-end and back-end ";
-    }// </editor-fold>
+    }
 
 }

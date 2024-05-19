@@ -3,20 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IOTBay;
+package IoTBay;
 
 // import IOTBay.DBManager;
 
 import java.lang.String;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.io.Serializable;
 
 
 /**
  *
  * @author Krish
  */
-public class User{
+public class User implements Serializable{
     private int user_id;
     private String first_name;
     private String last_name;
@@ -27,8 +29,7 @@ public class User{
     private String registration_datetime;
     private String access;  // Types: admin, staff, customer 
 
-    public User(int user_id, String first_name, String last_name, String email, String pass, String dob, String phone, String registration_datetime, String access) {
-        this.user_id = user_id;
+    public User(String first_name, String last_name, String email, String pass, String dob, String phone, String registration_datetime, String access) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
@@ -41,13 +42,29 @@ public class User{
 
     private String getUser(String column_name){
         try {
-            ResultSet resultSet = DBManager.readQuery("SELECT * FROM Users "+
-            "WHERE email = '" + this.email + "';");
+            PreparedStatement statement = DBManager.establishConnection("SELECT * FROM Users WHERE email = ? ");
+            statement.setString(1, this.email);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
             return resultSet.getString(column_name);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private int setUser(String change, String value){
+        try {
+            PreparedStatement statement = DBManager.establishConnection("UPDATE Users SET ? = ?, WHERE email = ? ");
+            statement.setString(1, change);
+            statement.setString(2, value);
+            statement.setString(3, this.email);
+            int response = statement.executeUpdate();
+            return response;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public int getId() {
@@ -56,9 +73,16 @@ public class User{
     }
 
     public void setId(int user_id) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET user_id = '" + user_id + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = 0;
+        try{
+            PreparedStatement statement = DBManager.establishConnection("UPDATE Users SET ? = ?, WHERE email = ? ");
+            statement.setString(1, "user_id");
+            statement.setInt(2, user_id);
+            statement.setString(3, this.email);
+            row_altered = statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.user_id = user_id;
@@ -71,9 +95,7 @@ public class User{
     }
 
     public void setFirst_name(String first_name) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET first_name = '" + first_name + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("first_name", first_name);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.first_name = first_name;
@@ -86,9 +108,7 @@ public class User{
     }
 
     public void setLast_name(String last_name) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET last_name = '" + last_name + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("last_name", last_name);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.last_name = last_name;
@@ -101,9 +121,7 @@ public class User{
     }
 
     public void setEmail(String email) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET email = '" + email + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("email", email);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.email = email;
@@ -116,9 +134,7 @@ public class User{
     }
 
     public void setPass(String pass) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET pass = '" + pass + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("pass", pass);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.pass = pass;
@@ -131,9 +147,7 @@ public class User{
     }
 
     public void setDob(String dob) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET pass = '" + dob + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("dob", dob);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.dob = dob;
@@ -145,9 +159,7 @@ public class User{
     }
 
     public void setPhone(String phone) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET phone = '" + phone + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("phone", phone);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.phone = phone;
@@ -160,9 +172,7 @@ public class User{
     }
 
     public void setRegDate(String registration_datetime) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET registration_datetime = '" + registration_datetime + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("registration_datetime", registration_datetime);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.registration_datetime = registration_datetime;
@@ -175,9 +185,7 @@ public class User{
     }
 
     public void setAccess(String access) {
-        int row_altered = DBManager.writeQuery("UPDATE Users" +
-            "SET access = '" + access + "'," +
-            "WHERE email = '" + this.email + "';");
+        int row_altered = setUser("access", access);
         // DBManager.closeConnection();
         if (row_altered != 0){
             this.access = access;

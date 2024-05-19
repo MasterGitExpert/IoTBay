@@ -1,27 +1,103 @@
-        <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoTBay</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .menu {
+            background-color: #666666;
+            overflow: hidden;
+            width: 100%; /* Ensure the menu fills the whole width */
+        }
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+            width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: center;
+        }
+        .menu li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .menu li a:hover {
+            background-color: #555;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .section-heading {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .section-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="menu">
+        <ul>
+            <li><a href="index.html" class="logo">Internet Of Things Bay</a></li>
+            <li><a href="fallback.jsp">Products</a></li>
+            <li><a href="fallback.jsp">Locations</a></li>
+            <li><a href="fallback.jsp">About</a></li>
+            <li><a href="login.jsp">Login</a></li>
+            <li><a href="register.jsp">Register</a></li>
+        </ul>
+    </nav>
 
-<html>
-    <head>
-        <title>IoTBay</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="main.css">
-    </head>
-    <body>
-        <nav>
-            <ul class="menu">
-                <li class="nav" style="padding-right: 300px;"><a href="index.html" class="logo">Internet Of Things Bay</a></li>
-                <li class="nav"><a href="fallback.jsp">Products</a></li>
-                <li class="nav"><a href="fallback.jsp">Locations</a></li>
-                <li class="nav"><a href="fallback.jsp">About</a></li>
-                <li class="nav"><a href="login.jsp">Login</a></li>
-                <li class="nav"><a href="register.jsp">Register</a></li>
-            </ul>
-        </nav>
-    </body>
+    <div class="container">
+        <div class="section">
+            <h2 class="section-heading">Featured Products</h2>
+            <div class="section-content">
+                <img src="https://res.cloudinary.com/rsc/image/upload/b_rgb:FFFFFF,c_pad,dpr_2.625,f_auto,h_214,q_auto,w_380/c_pad,h_214,w_380/F0315466-01?pgw=1" alt="IOT Sensor 2">
+                <p>$120 - 5 Left In Stock</p>
+            </div>
+        </div>
+    </div>
+
+    <button>Add to cart</button>
+</body>
 </html>
