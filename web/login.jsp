@@ -4,6 +4,7 @@
     and open the template in the editor.
 -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -43,7 +44,7 @@
                 <form action="welcome.jsp" method="POST">
                     <table style="border: none;">  
                         <tr>
-                            <td><label>Username</label></td><td><input type="text" placeholder="Enter Email" name="username" required="true">                            </td>
+                            <td><label>Username</label></td><td><input type="text" placeholder="Enter Email" name="username" required="true"></td>
                         </tr>
                     <div>  
                         <tr>

@@ -6,8 +6,8 @@
 
 -- Create
 
-INSERT INTO Users(first_name, last_name, email, pass, phone, registration_date, access) 
-VALUES ('coAdmin', 'coAdmin', 'co_admin@mail.com', 'co2admin143', '0123 456 789', '2020-1-1 00:00:00', 'ADMIN');
+INSERT INTO Users(first_name, last_name, email, pass, dob, phone, registration_datetime, access) 
+VALUES ('coAdmin', 'coAdmin', 'co_admin@mail.com', 'co2admin143', '2020-1-1', '0123 456 789', '2020-1-1 00:00:00', 'ADMIN');
 
 INSERT INTO UsersAccessLog (user_id, login_datetime, logout_datetime)
 VALUES (1, '2020-1-1 00:00:00', '2020-1-1 01:00:00');
